@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Редагувати нотатку</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'notes/style.css' %}">
+
+</head>
+<body>
+<div class="container">
+    <h1>Редагувати: {{ note.title }}</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn">Зберегти зміни</button>
+    </form>
+</div>
+
+</body>
+</html>

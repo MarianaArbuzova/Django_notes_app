@@ -1,11 +1,13 @@
 from django.urls import path
-from . import views
+from .views import index_view, create_note_view, note_detail_view, edit_note_view, delete_note_view
 
 
 app_name = 'notes'
 
 urlpatterns = [
-    # path('') означає головну сторінку застосунку
-    # Вона викликає функцію views.index_view, і ми даємо їй ім'я 'index'
-    path('', views.index_view, name='index'),
+    path('', index_view, name='index'),
+    path('create/', create_note_view, name='create_note'),
+    path('<int:pk>/', note_detail_view, name='note_detail'),
+    path('<int:pk>/edit/', edit_note_view, name='edit_note'),
+    path('<int:pk>/delete/', delete_note_view, name='delete_note'),
 ]

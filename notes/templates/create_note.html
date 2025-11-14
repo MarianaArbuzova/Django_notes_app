@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Створити нотатку</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'notes/style.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Створити нотатку</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn">
+            Створити
+        </button>
+    </form>
+</div>
+
+</body>
+</html>

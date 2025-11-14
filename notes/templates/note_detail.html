@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ note.title}}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'notes/style.css' %}">
+
+
+</head>
+<body>
+<div class="container">
+    <h1>
+        {{ note.title }}
+    </h1>
+    <p>
+        <strong>Нагадування:</strong> {{ note.reminder|default:"Без нагадування" }}
+    </p>
+    <p>
+        <strong>Категорія:</strong> {{ note.category.title }}
+    </p>
+    <p>
+        <strong>Текст::</strong>
+    </p>
+    <p>
+        {{ note.text }}
+    </p>
+
+    <br>
+
+    <a href="{% url 'notes:edit_note' note.pk %}" class="btn">Редагувати</a>
+    <a href="{% url 'notes:delete_note' note.pk %}" class="btn" style="background: red;">Видалити</a>
+</div>
+
+</body>
+</html>

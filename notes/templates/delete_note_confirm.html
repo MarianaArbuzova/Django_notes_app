@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Підтвердження видалення</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'notes/style.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>Видалити нотатку?</h1>
+
+    <p><strong>{{ note.title }}</strong></p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn" style="background: red;">Так видалити</button>
+        <a href="{% url 'notes:note_detail' note.pk %}" class="btn">Скасувати</a>
+    </form>
+</div>
+</body>
+</html>
