@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / compiled files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+*.egg-info/
+.pytest_cache/
+
+# Distribution / packaging
+.Python
+build/
+dist/
+eggs/
+*.egg
+*.whl
+
+# Environments
+.env
+venv/
+env/
+# virtualenv environments
+.venv/
+bin/
+include/
+lib/
+lib64/
+share/
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.swp
+*.bak
+*.swo
+
+# OS generated files
+.DS_Store
+.Trashes
+Thumbs.db
+
+# Testing and Coverage
+.coverage
+htmlcov/
+.nox/
+
+# Logs
+*.log

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns="http://www.w3.org/1999/html">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="{% static 'notes/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ page_title}}</h1>
+        <div class="notes-list">
+            {% for note in notes %}
+                <div class="note-card">
+                    <h2>{{ note.title }}</h2>
+                    <p class="date">
+                        {{ note.reminder|default:"Без нагадування" }}
+                    </p>
+                    <p><strong>Категорія:</strong>{{ note.category.title }}</p>
+                    <p>{{ note.text }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>
