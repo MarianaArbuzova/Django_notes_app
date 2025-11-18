@@ -1,73 +1,84 @@
-<!DOCTYPE html>
-<html lang="uk" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <title>{{ page_title }}</title>
-    <link rel="stylesheet" href="{% static 'notes/style.css' %}">
-</head>
-<body>
-    <div class="container">
-        <h1>{{ page_title}}</h1>
-        <a href="{% url 'notes:create_note' %}" class="btn"
-           style="display:inline-block;
-                  margin-bottom: 20px;
-                  font-weight: 600;
-                  background: #4CAF50;
-                  color:white;
-                  padding: 10px 20px;
-                  border-radius: 6px;
-                  text-decoration: none;">
-           + Створити нову нотатку
-        </a>
+{% extends 'base.html' %}
 
-        <form method="GET" action="" style="margin-bottom: 20px">
+{% block title %}Мої нотатки{% endblock %}
 
-            <input
-                type="text"
-                name="q"
-                value="{{ current_query }}"
-                placeholder="Пошук нотаток..."
-                style="padding: 8px; width: 250px;"
-            >
-            <select name="category" style="padding: 8px;">
-                <option value="">Всі категорії</option>
+{% block content %}
 
-                {% for cat in categories %}
-                    <option value="{{ cat.id }}"
-                        {% if current_category == cat.id|stringformat:'s' %}
-                        selected
-                        {% endif %}
-                    >
-                        {{ cat.title }}
-                    </option>
-                {% endfor %}
-            </select>
+<h1 class="mb-4">Мої нотатки</h1>
 
-            <button type="submit" class="btn">Фільтрувати</button>
+<!-- Форма пошуку + фільтрації -->
+<form method="GET" class="row g-3 align-items-end mb-4">
 
-            {% if current_query or current_category %}
-                <a href="{% url 'notes:index' %}" class="btn" style="margin-left: 10px;">Скинути</a>
-            {% endif %}
-        </form>
-        <div class="notes-list">
-            {% for note in notes %}
-                <div class="note-card">
-                    <h2>
+    <div class="col-md-6">
+        <label for="search" class="form-label fw-semibold">Пошук нотаток:</label>
+        <input id="search"
+               type="text"
+               class="form-control"
+               name="q"
+               value="{{ current_query }}"
+               placeholder="Введіть назву...">
+    </div>
+
+    <div class="col-md-4">
+        <label for="category" class="form-label fw-semibold">Категорія:</label>
+        <select id="category" name="category" class="form-select">
+            <option value="">Всі категорії</option>
+
+            {% for cat in categories %}
+                <option value="{{ cat.id }}"
+                    {% if current_category == cat.id|stringformat:'s' %}selected{% endif %}>
+                    {{ cat.title }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <button class="btn btn-primary w-100" type="submit">
+            Фільтрувати
+        </button>
+    </div>
+
+</form>
+
+{% if current_query or current_category %}
+    <a href="{% url 'notes:index' %}"
+       class="btn btn-outline-secondary btn-sm mb-3">
+        Скинути фільтри
+    </a>
+{% endif %}
+
+<!-- Список нотаток -->
+<div class="row">
+    {% for note in notes %}
+        <div class="col-12 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <h4 class="card-title mb-1">
                         <a href="{% url 'notes:note_detail' note.id %}">
                             {{ note.title }}
                         </a>
-                    </h2>
-                    <p class="date">
+                    </h4>
+
+                    <p class="text-muted small mb-1">
                         {{ note.reminder|default:"Без нагадування" }}
                     </p>
-                    <p><strong>Категорія:</strong>{{ note.category.title }}</p>
-                    <p>{{ note.text }}</p>
+
+                    <p class="mb-1">
+                        <strong>Категорія:</strong> {{ note.category.title }}
+                    </p>
+
+                    <p class="mb-0">
+                        {{ note.text|truncatechars:200 }}
+                    </p>
+
                 </div>
-            {% endfor %}
+            </div>
         </div>
-    </div>
+    {% empty %}
+        <p class="text-center text-muted">Нотаток не знайдено.</p>
+    {% endfor %}
+</div>
 
-</body>
-</html>
-
+{% endblock %}

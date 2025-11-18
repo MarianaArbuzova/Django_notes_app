@@ -1,23 +1,48 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <title>Редагувати нотатку</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'notes/style.css' %}">
+{% extends 'base.html' %}
 
-</head>
-<body>
-<div class="container">
-    <h1>Редагувати: {{ note.title }}</h1>
+{% block title %}Редагувати нотатку{% endblock %}
 
-    <form method="POST">
+{% block content %}
+
+<div class="container-main mx-auto">
+    <h2 class="mb-4">Редагувати нотатку</h2>
+
+    <form method="POST" class="card p-4 shadow-sm">
         {% csrf_token %}
-        {{ form.as_p }}
 
-        <button type="submit" class="btn">Зберегти зміни</button>
+        <!-- Назва -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Назва:</label>
+            {{ form.title }}
+        </div>
+
+        <!-- Текст -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Текст:</label>
+            {{ form.text }}
+        </div>
+
+        <!-- Нагадування -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Нагадування:</label>
+            {{ form.reminder }}
+        </div>
+
+        <!-- Категорія -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Категорія:</label>
+            {{ form.category }}
+        </div>
+
+        <!-- Кнопки -->
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success px-4">Зберегти зміни</button>
+            <a href="{% url 'notes:note_detail' note.id %}" class="btn btn-outline-secondary px-4">
+                Скасувати
+            </a>
+        </div>
+
     </form>
 </div>
 
-</body>
-</html>
+{% endblock %}
